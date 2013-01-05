@@ -7,3 +7,6 @@
 .manager
 .scala_dependencies
 .cache
+
+#personal build file
+build.xml
