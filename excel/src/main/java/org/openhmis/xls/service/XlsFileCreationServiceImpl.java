@@ -29,9 +29,9 @@ public class XlsFileCreationServiceImpl implements XlsFileCreationService{
 
     public File createXlsFileWithMultipleSheets(List<XlsSheetData> sheetData) throws XlsFileNotWrittenException {
         workbook = new HSSFWorkbook();
-        for (XlsSheetData singelSheetData : sheetData) {
-            HSSFSheet sheet = createNewSheet(singelSheetData.getSheetName());
-            xlsSheetPopulationService.writeSheet(sheet, singelSheetData);
+        for (XlsSheetData singleSheetData : sheetData) {
+            HSSFSheet sheet = createNewSheet(singleSheetData.getSheetName());
+            xlsSheetPopulationService.writeSheet(sheet, singleSheetData);
         }
         return writeToFile();
     }
