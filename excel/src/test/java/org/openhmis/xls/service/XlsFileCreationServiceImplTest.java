@@ -17,7 +17,8 @@ public class XlsFileCreationServiceImplTest {
     private static final String DEFAULT_SHEET_NAME_1 = "defaultSheetName1";
     private static final String DEFAULT_SHEET_NAME_2 = "defaultSheetName2";
 
-    private XlsFileCreationService xlsFileCreationService;
+    private XlsFileCreationService xlsFileCreationServiceSingle;
+    private XlsFileCreationService xlsFileCreationServiceMultiple;
     private XlsSheetData sheetData1;
     private XlsSheetData sheetData2;
     private File testFileSingleSheet;
@@ -25,14 +26,17 @@ public class XlsFileCreationServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        xlsFileCreationService = new XlsFileCreationServiceImpl(FILE_NAME);
+        xlsFileCreationServiceSingle = new XlsFileCreationServiceImpl(FILE_NAME + "1");
+        xlsFileCreationServiceMultiple = new XlsFileCreationServiceImpl(FILE_NAME + "2");
         sheetData1 = new XlsSheetData(DEFAULT_SHEET_NAME_1);
         sheetData2 = new XlsSheetData(DEFAULT_SHEET_NAME_2);
     }
 
     @Test
     public void shouldWriteFileForSingleSheet() throws Exception {
+        testFileSingleSheet = xlsFileCreationServiceSingle.createXlsFileWithSingleSheet(sheetData1);
         assertTrue(testFileSingleSheet.exists());
+        testFileSingleSheet.delete();
     }
 
     @Test
@@ -40,17 +44,9 @@ public class XlsFileCreationServiceImplTest {
         List<XlsSheetData> sheetData = new ArrayList<XlsSheetData>(2);
         sheetData.add(sheetData1);
         sheetData.add(sheetData2);
-        testFileMultipleSheet = xlsFileCreationService.createXlsFileWithMultipleSheets(sheetData);
+        testFileMultipleSheet = xlsFileCreationServiceMultiple.createXlsFileWithMultipleSheets(sheetData);
         assertTrue(testFileMultipleSheet.exists());
+        testFileMultipleSheet.delete();
     }
 
-    @After
-    public void cleanUp() {
-        if (testFileSingleSheet.exists()) {
-            testFileSingleSheet.delete();
-        }
-        if (testFileMultipleSheet.exists()) {
-            testFileMultipleSheet.delete();
-        }
-    }
 }
